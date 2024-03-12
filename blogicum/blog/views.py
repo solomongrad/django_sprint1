@@ -44,13 +44,15 @@ posts = [
     },
 ]
 
+posts_dict = {post['id']: post for post in posts}
+
 
 def index(request):
     return render(request, 'blog/index.html', {'post': reversed(posts)})
 
 
 def post_detail(request, id):
-    if id not in [post['id'] for post in posts]:
+    if id not in posts_dict.keys():
         raise Http404(f'Пост {id} не найден.')
     return render(request, 'blog/detail.html', {'post': posts[id]})
 
